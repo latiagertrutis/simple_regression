@@ -6,7 +6,7 @@
 #    By: mrodrigu <mrodrigu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/30 11:09:41 by mrodrigu          #+#    #+#              #
-#    Updated: 2018/10/30 13:25:03 by mrodrigu         ###   ########.fr        #
+#    Updated: 2018/10/30 15:05:09 by mrodrigu         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,11 +16,12 @@ SHELL = /bin/bash
 
 NAME = reg
 
-C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS = -Wall -Werror -Wextra -lboost_iostreams -lboost_system -lboost_filesystem
 
 CC = g++
 
-FUNCS = main.cpp
+FUNCS = main.cpp \
+		data_reader.cpp
 
 SRCS_DIR = srcs/
 
@@ -39,13 +40,12 @@ N_SRCS = $(shell ls srcs | wc -l)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) -o $(NAME)
+	@$(CC) $(OBJ) -o $(NAME) $(C_FLAGS)
 
 $(OBJ_DIR)%.o: $(SRCS_DIR)%.cpp $(INC)
 	@mkdir -p $(OBJ_DIR)
 	@echo "Compiling [$(shell echo ${I})/${N_SRCS}] => $(@F)"
-#	@echo -n "\033[92m[$$(($(I)))]--->Compiling $(@F)\033[0m"
-	@$(CC) $(C_FLAGS) -c $< -I $(INC_DIR) -o $@
+	@$(CC) -c -I $(INC_DIR) $< -o $@ $(C_FLAGS)
 	@echo "\033[92m   [OK]\n\033[0m"
 
 clean:
