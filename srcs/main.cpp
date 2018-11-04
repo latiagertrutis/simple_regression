@@ -12,15 +12,29 @@
 
 #include "regression.h"
 
-int	main(void)
+static void plot_points (const Eigen::Matrix<double, Eigen::Dynamic, 2> *X,
+						 const Eigen::Matrix<double, Eigen::Dynamic, 1> *Y)
 {
   Gnuplot gp;
-  string path = "resources/data1.dat";
-  vector<boost::tuple<double, double>> points = data_reader(path);
-  vector<boost::tuple<double, double>>::iterator it;
+  vector<boost::tuple<double, double>> v(X->rows());
+  size_t i;
 
-  for(it = points.begin(); it < points.end(); it++)
-	cout << it->get<0>()<<" \t" << it->get<1>() << endl;
-  gp << "plot '-' with points title 'pts_A'\n";
-  gp.send1d(points);
+  for(i = 0; i < (size_t)X->rows(); i++)
+	v[i] = boost::make_tuple((*X)(i, 1), (*Y)(i, 0));
+  gp << "plot -0.262323 + 1.00212 * x \n";
+  gp << "replot '-' with points title 'pts_A'\n";
+  gp.send1d(v);
+}
+
+int	main(void)
+{
+  string path = "resources/data1.dat";
+  Eigen::Matrix<double, Eigen::Dynamic, 2> X;
+  Eigen::Matrix<double, Eigen::Dynamic, 1> Y;
+
+  data_reader(path, &X, &Y);
+  plot_points(&X, &Y);
+  cout << (X.transpose() * X).inverse() * X.transpose() * Y << endl;
+  // gp << "plot 1 + x + x ** 2 + x ** 3 + x ** 4 + x ** 5\n";
+  return (0);
 }

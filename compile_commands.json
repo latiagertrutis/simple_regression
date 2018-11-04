@@ -14,5 +14,21 @@
         ],
         "directory": "/home/mateo/Dropbox/workspace/simple_regression",
         "file": "srcs/main.cpp"
+    },
+    {
+        "arguments": [
+            "c++",
+            "-c",
+            "-I",
+            "includes/",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-o",
+            "objects/data_reader.o",
+            "srcs/data_reader.cpp"
+        ],
+        "directory": "/home/mateo/Dropbox/workspace/simple_regression",
+        "file": "srcs/data_reader.cpp"
     }
 ]

@@ -44,16 +44,18 @@ $(NAME): $(OBJ)
 
 $(OBJ_DIR)%.o: $(SRCS_DIR)%.cpp $(INC)
 	@mkdir -p $(OBJ_DIR)
-	@echo "Compiling [$(shell echo ${I})/${N_SRCS}] => $(@F)"
-	@$(CC) -c -I $(INC_DIR) $< -o $@ $(C_FLAGS)
-	@echo "\033[92m   [OK]\n\033[0m"
+	@echo -n "Compiling [$(shell echo ${I})/${N_SRCS}] => $(@F)"
+	@if $(CC) -c -I $(INC_DIR) $< -o $@ $(C_FLAGS) ; then \
+		 echo	" ===>[OK]"; \
+	 fi
+	@$(eval I=$(shell echo $$(($(I)+1))))
 
 clean:
-	@echo "\033[92m***Cleaning Objects***\033[0m\n"
+	@echo "***Cleaning Objects***"
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@echo "\033[92m***Cleaning Executables & Libraries***\033[0m\n"
+	@echo "***Cleaning Executables & Libraries***"
 	@rm -f $(NAME)
 
 re: fclean

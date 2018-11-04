@@ -17,11 +17,13 @@
 #include <map>
 #include <vector>
 #include <cmath>
+#include <../Eigen/Dense>
 #include "../gnuplot-iostream/gnuplot-iostream.h"
 using namespace std;
 
 #define POINT_BUFF 50
 
-vector<boost::tuple<double, double>>	data_reader(string str);
+void data_reader(const string str, Eigen::Matrix<double, Eigen::Dynamic, 2> *X,
+				 Eigen::Matrix<double, Eigen::Dynamic, 1> *Y);
 
 #endif
