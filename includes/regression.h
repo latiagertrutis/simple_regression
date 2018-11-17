@@ -23,7 +23,9 @@ using namespace std;
 
 #define POINT_BUFF 50
 
-void data_reader(const string str, Eigen::Matrix<double, Eigen::Dynamic, 2> *X,
-				 Eigen::Matrix<double, Eigen::Dynamic, 1> *Y);
+void data_reader(const string str,
+				 Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> *X,
+				 Eigen::Matrix<double, Eigen::Dynamic, 1> *Y,
+				 const unsigned char freedom);
 
 #endif

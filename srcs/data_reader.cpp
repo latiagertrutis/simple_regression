@@ -12,13 +12,17 @@
 
 #include "regression.h"
 
-void data_reader(const string str, Eigen::Matrix<double, Eigen::Dynamic, 2> *X,
-				 Eigen::Matrix<double, Eigen::Dynamic, 1> *Y)
+void data_reader(const string str,
+				 Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> *X,
+				 Eigen::Matrix<double, Eigen::Dynamic, 1> *Y,
+				 const unsigned char freedom)
 {
   ifstream file;
   double x, y;
   size_t i;
+  unsigned char j;
 
+  X->resize(Eigen::NoChange, freedom);
   file.open(str, fstream::in);
   if (!file.is_open())
     exit(1);
@@ -28,7 +32,8 @@ void data_reader(const string str, Eigen::Matrix<double, Eigen::Dynamic, 2> *X,
 	  X->conservativeResize(i + 1, Eigen::NoChange);
 	  Y->conservativeResize(i + 1, Eigen::NoChange);
 	  file >> y >> x;
-	  X->row(i) << 1, x;
+	  for(j = 0; j < freedom; j++)
+		(*X)(i, j) = pow(x, j);
 	  Y->row(i) << y;
 	  i++;
     }
