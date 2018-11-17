@@ -47,7 +47,11 @@ int	main(int argc, char **argv)
 	  cout << "Invalid number of arguments\n";
 	  exit (1);
 	}
-  freedom = (unsigned char)stoi(argv[1]);
+  if ((freedom = (unsigned char)stoi(argv[1])) <= 1)
+	{
+	  cout << "Degrees of freedom can not be 0 or 1" << endl;
+	  exit(1);
+	}
   for (int i = 2; i < argc; i++)
 	{
 	  data_reader(argv[i], &X, &Y, freedom);
